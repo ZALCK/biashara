@@ -3,6 +3,7 @@ package com.elgroup.biashara.security;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
+@Entity
 public class Role {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,7 +22,7 @@ public class Role {
     
     @ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
-			name = "role_privilege",
+			name = "T_Roles_Privileges_Association",
 			joinColumns = @JoinColumn(name = "role_id"),
 			inverseJoinColumns = @JoinColumn(name = "privilege_id"))
 	Set<Privilege> privileges = new HashSet<>();

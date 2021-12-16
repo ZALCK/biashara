@@ -1,0 +1,51 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>List moderators</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+	<div th:switch="${moderators.isEmpty()}">
+		<h2 th:case="true">No moderators found!</h2>
+		<div th:case="*">
+			<h2>Moderators</h2>
+			<table>
+				<thead>
+					<tr>
+						<th>Firstname</th>
+						<th>Lastname</th>
+						<th>Email</th>
+						<th>Phone</th>
+						<th>ID Card</th>
+						<th>Password</th>
+						<th>Edit</th>
+						<th>Reset</th>
+						<th>Delete</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="moderator : ${moderators}">
+						<td th:text="${moderator.firstname}"></td>
+						<td th:text="${moderator.lastname}"></td>
+						<td th:text="${moderator.email}"></td>
+						<td th:text="${moderator.phone}"></td>
+						<td th:text="${moderator.idCard}"></td>
+						<td th:text="${moderator.password}"></td>
+						<td><a th:href="@{/moderator/update/{id}(id=${moderator.id})}">Edit</a></td>
+						<td><a th:href="@{/moderator/reset/{id}(id=${moderator.id})}">Reset</a></td>
+						<td><a th:href="@{/moderator/status/{id}(id=${moderator.id})}"
+								th:utext="${moderator.enabled} ? 'Disable' : 'Enable'">Enabled</a></td>
+						<td><a th:href="@{/moderator/delete/{id}(id=${moderator.id})}">Delete</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<p>
+			<a th:href="@{/moderator/add}">Add a new moderator</a>
+		</p>
+	</div>
+</body>
+</html>

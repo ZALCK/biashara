@@ -1,4 +1,4 @@
-package com.elgroup.biashara.order;
+package com.elgroup.biashara.command;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -20,21 +20,21 @@ import org.springframework.data.annotation.CreatedDate;
 import com.elgroup.biashara.user.customer.Customer;
 
 @Entity
-public class Order {
+public class Command {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	
 	@CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
-	private Date orderDate;
+	private Date commandDate;
 	
 	@ManyToOne @JoinColumn(name="idCustomer", nullable=false)
     private Customer customer;
 	
-	@OneToMany(targetEntity=OrderLine.class, mappedBy="order", cascade=CascadeType.ALL)
-    private Set<OrderLine> orderLines = new HashSet<OrderLine>();
+	@OneToMany(targetEntity=CommandLine.class, mappedBy="command", cascade=CascadeType.ALL)
+    private Set<CommandLine> commandLines = new HashSet<CommandLine>();
 
 	public long getId() {
 		return id;
@@ -44,28 +44,28 @@ public class Order {
 		this.id = id;
 	}
 
-	public Date getOrderDate() {
-		return orderDate;
+	public Date getCommandDate() {
+		return commandDate;
 	}
 
-	public void setOrderDate(Date orderDate) {
-		this.orderDate = orderDate;
+	public void setCommandDate(Date commandDate) {
+		this.commandDate = commandDate;
 	}
 
-	public Set<OrderLine> getOrderlines() {
-		return orderLines;
+	public Set<CommandLine> getCommandlines() {
+		return commandLines;
 	}
 
-	public void setOrderlines(Set<OrderLine> orderlines) {
-		this.orderLines = orderlines;
+	public void setCommandlines(Set<CommandLine> commandlines) {
+		this.commandLines = commandlines;
 	}
 
 	public String toString() {
         double totalPrice = 0;
         StringBuilder builder = new StringBuilder();
         builder.append( "Commande de >> " ).append( this.customer).append( " - " )
-                        .append( this.orderDate ).append( "\n" );
-        for( OrderLine theLine : this.orderLines ) {
+                        .append( this.commandDate ).append( "\n" );
+        for( CommandLine theLine : this.commandLines ) {
             builder.append( "\t" ).append( theLine ).append( "\n" );
             totalPrice += theLine.getQuantity() * theLine.getProduct().getPrice();
         }

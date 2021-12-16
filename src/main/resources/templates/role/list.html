@@ -1,0 +1,39 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>List roles</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+	<div th:switch="${roles.isEmpty()}">
+		<h2 th:case="true">No roles found!</h2>
+		<div th:case="*">
+			<h2>Roles</h2>
+			<table>
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Privileges</th>
+						<th>Edit</th>
+						<th>Delete</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="role : ${roles}">
+						<td th:text="${role.name}"></td>
+						<td th:text="${role.toString()}"></td>
+						<td><a th:href="@{/role/update/{id}(id=${role.id})}">Edit</a></td>
+						<td><a th:href="@{/role/delete/{id}(id=${role.id})}">Delete</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<p>
+			<a th:href="@{/role/add}">Add a new role</a>
+		</p>
+	</div>
+</body>
+</html>

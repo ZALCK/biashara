@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -32,7 +33,9 @@ public class User {
     private Date creationDate;
 	
 	@OneToOne()
-	@JoinColumn(nullable = false)
+	@JoinTable( name = "T_User_Role_Association",
+				joinColumns = @JoinColumn( name = "idUser" ),
+				inverseJoinColumns = @JoinColumn( name = "idRole" ))
 	private Role role;
 
 	public long getId() {

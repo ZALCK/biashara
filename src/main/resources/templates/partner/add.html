@@ -1,0 +1,60 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>Add a Partner</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+
+	<form action="#" th:action="@{/partner/add}" th:object="${partner}"
+		method="post">
+		
+		<label for="firstname">Prénoms
+			<input type="text" th:field="*{firstname}" placeholder="Entrez vos prénoms" required="required">
+		</label>
+		
+		<label for="lastname">Nom
+			<input type="text" th:field="*{lastname}" placeholder="Entrez votre nom" required="required">
+		</label>
+		
+		<label for="email">Email
+			<input type="email" th:field="*{email}" placeholder="Entrez votre addresse electronique" required="required">
+		</label>
+		
+		<label for="phone">Mot de passe :
+			<input type="password" th:field="*{password}" placeholder="Entrez votre mot de passe" required="required">
+		</label>
+		
+		<label for="phone">Répéter mot de passe :
+			<input type="password" name="repeatPassword" placeholder="Retapez votre mot de passe" required="required">
+		</label>
+		
+		<label for="phone">Téléphone :
+			<input type="text" th:field="*{phone}" placeholder="Numéro de téléphone" required="required">
+		</label>
+		
+		<label for="idCard">Numéro carte d'identité nationale :
+			<input type="text" th:field="*{idCard}" placeholder="Numéro d'identité nationale'">
+		</label>
+		
+		<label for="businessName">Nom de votre entreprise :
+			<input type="text" th:field="*{businessName}" placeholder="Nom de votre entreprise">
+		</label>
+		
+		<label for="businessSlogan">Slogan de votre entreprise :
+			<input type="text" th:field="*{businessSlogan}" placeholder="Slogan de votre entreprise">
+		</label>
+		
+		<label for="businessLogo">Logo de votre entreprise :
+			<input type="text" th:field="*{businessLogo}" placeholder="Logo de votre entreprise">
+		</label>
+		
+		<input type="submit" value="Add partner">
+	</form>
+
+</body>
+
+</html>

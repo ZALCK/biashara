@@ -15,12 +15,12 @@ import com.elgroup.biashara.user.User;
 @PrimaryKeyJoinColumn(name = "ID")
 public class Customer extends User{
 	private long phone;
-	private long city;
+	private String city;
 	
 	@OneToMany(targetEntity = Comment.class, mappedBy = "customer")
 	private List<Comment> comments = new ArrayList<>();
 	
-	@OneToMany(targetEntity = Report.class, mappedBy = "report")
+	@OneToMany(targetEntity = Report.class, mappedBy = "customer")
 	private List<Report> reports = new ArrayList<>();
 
 	public long getPhone() {
@@ -31,11 +31,11 @@ public class Customer extends User{
 		this.phone = phone;
 	}
 
-	public long getCity() {
+	public String getCity() {
 		return city;
 	}
 
-	public void setCity(long city) {
+	public void setCity(String city) {
 		this.city = city;
 	}
 

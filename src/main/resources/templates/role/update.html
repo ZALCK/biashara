@@ -1,0 +1,35 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>Add a Role</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+
+	<form action="#" th:action="@{/role/update}" th:object="${role}"
+		method="post">
+		
+		<input type="hidden" th:field="*{id}">
+		
+		<label for="name">Nom :
+			<input type="text" th:field="*{name}" placeholder="Role name" required="required">
+		</label>
+		
+		<label>Privilèges :
+	        <input type="checkbox" name="privileges"
+	            th:each="privilege : ${allPrivileges}"
+	            th:text="${privilege.name}"
+	            th:value="${privilege.id}"
+	            th:field="*{privileges}"
+	        />
+    	</label>
+		
+		<input type="submit" value="Update Role">
+	</form>
+
+</body>
+
+</html>

@@ -42,7 +42,7 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public void delete(User user) {
 		// TODO Auto-generated method stub
-		isd.delete(user);;
+		isd.delete(user);
 	}
 
 	@Override
@@ -76,7 +76,5 @@ public class UserServiceImpl implements IUserService {
 		// TODO Auto-generated method stub
 		return ird.findByName(name);
 	}
-
-	
 
 }

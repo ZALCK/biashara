@@ -1,0 +1,57 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>List partners</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+	<div th:switch="${partners.isEmpty()}">
+		<h2 th:case="true">No partners found!</h2>
+		<div th:case="*">
+			<h2>Partners</h2>
+			<table>
+				<thead>
+					<tr>
+						<th>Firstname</th>
+						<th>Lastname</th>
+						<th>Email</th>
+						<th>Phone</th>
+						<th>Numéro d'identité</th>
+						<th>Nom entreprise</th>
+						<th>Slogan entreprise</th>
+						<th>Logo entreprise</th>
+						<th>Password</th>
+						<th>Edit</th>
+						<th>Reset</th>
+						<th>Delete</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="partner : ${partners}">
+						<td th:text="${partner.firstname}"></td>
+						<td th:text="${partner.lastname}"></td>
+						<td th:text="${partner.email}"></td>
+						<td th:text="${partner.phone}"></td>
+						<td th:text="${partner.idCard}"></td>
+						<td th:text="${partner.businessName}"></td>
+						<td th:text="${partner.businessSlogan}"></td>
+						<td th:text="${partner.businessLogo}"></td>
+						<td th:text="${partner.password}"></td>
+						<td><a th:href="@{/partner/update/{id}(id=${partner.id})}">Edit</a></td>
+						<td><a th:href="@{/partner/reset/{id}(id=${partner.id})}">Reset</a></td>
+						<td><a th:href="@{/partner/status/{id}(id=${partner.id})}"
+								th:utext="${partner.enabled} ? 'Disable' : 'Enable'">Enabled</a></td>
+						<td><a th:href="@{/partner/delete/{id}(id=${partner.id})}">Delete</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<p>
+			<a th:href="@{/partner/add}">Add a new partner</a>
+		</p>
+	</div>
+</body>
+</html>

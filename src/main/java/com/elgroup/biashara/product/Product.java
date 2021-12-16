@@ -12,8 +12,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.elgroup.biashara.command.CommandLine;
 import com.elgroup.biashara.comment.Comment;
-import com.elgroup.biashara.order.OrderLine;
 import com.elgroup.biashara.user.partner.Partner;
 
 @Entity
@@ -27,14 +27,14 @@ public class Product {
 	private boolean inStock;
 	private String image_link;
 	
-	@ManyToOne  
+	@ManyToOne
     @JoinTable(name = "T_Products_Partner_Association",
     			joinColumns = @JoinColumn(name="idProduct"),
     			inverseJoinColumns = @JoinColumn(name="idPartner"))
 	private Partner partner;
 	
-	@OneToMany(targetEntity = OrderLine.class, mappedBy = "product")
-	private List<OrderLine> orderLines = new ArrayList<>();
+	@OneToMany(targetEntity = CommandLine.class, mappedBy = "product")
+	private List<CommandLine> commandLines = new ArrayList<>();
 	
 	@OneToMany(targetEntity = Comment.class, mappedBy = "product")
 	private List<Comment> comments = new ArrayList<>();
@@ -95,10 +95,27 @@ public class Product {
 		this.partner = partner;
 	}
 
+	public List<CommandLine> getCommandLines() {
+		return commandLines;
+	}
+
+	public void setCommandLines(List<CommandLine> commandLines) {
+		this.commandLines = commandLines;
+	}
+
+	public List<Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
+	}
+
 	@Override
 	public String toString() {
 		return "Product [id=" + id + ", name=" + name + ", description=" + description + ", price=" + price
-				+ ", inStock=" + inStock + ", image_link=" + image_link + ", partner=" + partner + "]";
+				+ ", inStock=" + inStock + ", image_link=" + image_link + ", partner=" + partner + ", commandLines="
+				+ commandLines + ", comments=" + comments + "]";
 	}
 	
 }

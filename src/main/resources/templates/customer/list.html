@@ -1,0 +1,51 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>List customers</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+	<div th:switch="${customers.isEmpty()}">
+		<h2 th:case="true">No customers found!</h2>
+		<div th:case="*">
+			<h2>Customers</h2>
+			<table>
+				<thead>
+					<tr>
+						<th>Firstname</th>
+						<th>Lastname</th>
+						<th>Email</th>
+						<th>Phone</th>
+						<th>City</th>
+						<th>Password</th>
+						<th>Edit</th>
+						<th>Reset</th>
+						<th>Delete</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="customer : ${customers}">
+						<td th:text="${customer.firstname}"></td>
+						<td th:text="${customer.lastname}"></td>
+						<td th:text="${customer.email}"></td>
+						<td th:text="${customer.phone}"></td>
+						<td th:text="${customer.city}"></td>
+						<td th:text="${customer.password}"></td>
+						<td><a th:href="@{/customer/update/{id}(id=${customer.id})}">Edit</a></td>
+						<td><a th:href="@{/customer/reset/{id}(id=${customer.id})}">Reset</a></td>
+						<td><a th:href="@{/customer/status/{id}(id=${customer.id})}"
+								th:utext="${customer.enabled} ? 'Disable' : 'Enable'">Enabled</a></td>
+						<td><a th:href="@{/customer/delete/{id}(id=${customer.id})}">Delete</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<p>
+			<a th:href="@{/customer/add}">Add a new customer</a>
+		</p>
+	</div>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>Update a Customer</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+
+	<form action="#" th:action="@{/customer/update}" th:object="${customer}"
+		method="post">
+		
+		<input type="hidden" th:field="*{id}">
+		
+		<label for="firstname">Prénoms
+			<input type="text" th:field="*{firstname}" placeholder="Entrez vos prénoms" required="required">
+		</label>
+		
+		<label for="lastname">Nom
+			<input type="text" th:field="*{lastname}" placeholder="Entrez votre nom" required="required">
+		</label>
+		
+		<label for="email">Email
+			<input type="email" th:field="*{email}" placeholder="Entrez votre addresse electronique" required="required">
+		</label>
+		
+		<label for="phone">Téléphone :
+			<input type="text" th:field="*{phone}" placeholder="Numéro de téléphone" required="required">
+		</label>
+		
+		<label for="phone">Ville :
+			<input type="text" th:field="*{city}" placeholder="Ville où vous résidez" required="required">
+		</label>
+		
+		<input type="submit" value="Update Customer">
+	</form>
+
+</body>
+
+</html>
