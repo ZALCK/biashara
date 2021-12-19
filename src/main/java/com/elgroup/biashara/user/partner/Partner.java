@@ -3,6 +3,7 @@ package com.elgroup.biashara.user.partner;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -13,9 +14,16 @@ import com.elgroup.biashara.user.User;
 @Entity
 @PrimaryKeyJoinColumn(name = "ID")
 public class Partner extends User{
+	
+	@Column(unique=true)
 	private long phone;
+	
+	@Column(unique=true)
 	private long idCard;
+	
+	@Column(unique=true)
 	private String businessName;
+	
 	private String businessLogo;
 	private String businessSlogan;
 	

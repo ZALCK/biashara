@@ -2,7 +2,10 @@ package com.elgroup.biashara.exception;
 
 public final class UserAlreadyExistException extends RuntimeException {
 
-	private static final long serialVersionUID = 6489517055476021776L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	public UserAlreadyExistException() {
         super();

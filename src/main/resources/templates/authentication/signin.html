@@ -1,0 +1,43 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>Sign IN</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+
+	<form th:action="@{/authentication/login}" method="post">
+		
+		<fieldset>	
+			<legend>Please Login</legend>
+
+			<div th:if="${param.error}">
+				Invalid username and password.
+			</div>
+			
+			<div th:if="${param.logout}">
+				You have been logged out.
+			</div>
+			
+			<div th:if="${message != null}">
+	    		<p>[[${message}]]</p>
+			</div>
+			
+			<label for="email">Email
+				<input type="email" name="username" placeholder="Entrez votre addresse electronique" required="required">
+			</label>
+			<label for="phone">Mot de passe :
+				<input type="password" name="password" placeholder="Entrez votre mot de passe" required="required">
+			</label>
+			<input type="submit" value="Se connecter">
+		</fieldset>
+		
+	</form>
+	<a th:href="@{/authentication/forgot_password}">Forgot your password?</a>
+
+</body>
+
+</html>

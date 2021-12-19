@@ -1,5 +1,6 @@
 package com.elgroup.biashara.user.moderator;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 
@@ -8,7 +9,11 @@ import com.elgroup.biashara.user.User;
 @Entity
 @PrimaryKeyJoinColumn(name = "ID")
 public class Moderator extends User{
+	
+	@Column(unique=true)
 	private long phone;
+	
+	@Column(unique=true)
 	private long idCard;
 	
 	public long getPhone() {

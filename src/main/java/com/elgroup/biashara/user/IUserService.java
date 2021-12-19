@@ -14,5 +14,10 @@ public interface IUserService {
 	
 	public User registerNewUserAccount(User user) throws UserAlreadyExistException;
 	public User findByEmail(String email);
-	public Role getRoleByName(String name);
+	
+	// Password resetting methods 
+	public void updateResetPasswordToken(String token, String email);
+	public User getByResetPasswordToken(String token);
+	public void updatePassword(User user, String newPassword);
+	
 }

@@ -16,7 +16,7 @@ public class PartnerServiceImpl implements IPartnerService {
 	private String PARTNER_ROLE_IN_DATABASE ="PARTENAIRE";
 	
 	@Autowired
-	IPartnerDOA ipd;
+	IPartnerDAO ipd;
 	@Autowired
 	IRoleDAO ird;
 	@Autowired

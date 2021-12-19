@@ -2,6 +2,7 @@ package com.elgroup.biashara.user;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,17 +22,25 @@ import com.elgroup.biashara.security.Role;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public class User {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
+
+	protected String firstname, lastname, password;
 	
-	protected String firstname, lastname, email, password;
+	@Column(unique=true)
+	protected String email;
+	
+	@Column(unique=true)
+	protected String resetPasswordToken;
+	
 	protected boolean enabled;
-	
+
 	@CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
     private Date creationDate;
-	
+
 	@OneToOne()
 	@JoinTable( name = "T_User_Role_Association",
 				joinColumns = @JoinColumn( name = "idUser" ),
@@ -102,11 +111,19 @@ public class User {
 		this.role = role;
 	}
 
+	public String getResetPasswordToken() {
+		return resetPasswordToken;
+	}
+
+	public void setResetPasswordToken(String resetPasswordToken) {
+		this.resetPasswordToken = resetPasswordToken;
+	}
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", firstname=" + firstname + ", lastname=" + lastname + ", email=" + email
-				+ ", password=" + password + ", enabled=" + enabled + ", creationDate=" + creationDate + ", role="
-				+ role + "]";
+				+ ", password=" + password + ", resetPasswordToken=" + resetPasswordToken + ", enabled=" + enabled
+				+ ", creationDate=" + creationDate + ", role=" + role + "]";
 	}
-	
+
 }

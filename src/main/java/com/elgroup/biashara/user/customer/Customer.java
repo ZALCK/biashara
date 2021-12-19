@@ -3,6 +3,7 @@ package com.elgroup.biashara.user.customer;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -14,7 +15,10 @@ import com.elgroup.biashara.user.User;
 @Entity
 @PrimaryKeyJoinColumn(name = "ID")
 public class Customer extends User{
+	
+	@Column(unique=true)
 	private long phone;
+	
 	private String city;
 	
 	@OneToMany(targetEntity = Comment.class, mappedBy = "customer")

@@ -16,7 +16,7 @@ public class ModeratorServiceImpl implements IModeratorService {
 	private String MODERATOR_ROLE_IN_DATABASE ="MODERATEUR";
 	
 	@Autowired
-	IModeratorDOA imd;
+	IModeratorDAO imd;
 	@Autowired
 	IRoleDAO ird;
 	@Autowired

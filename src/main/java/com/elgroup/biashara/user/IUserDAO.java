@@ -5,4 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface IUserDAO extends JpaRepository<User, Long> {
 	
 	public User findByEmail(String email);
+	public User findByResetPasswordToken(String token);
 }

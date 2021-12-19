@@ -16,7 +16,7 @@ public class CustomerServiceImpl implements ICustomerService {
 	private String CUSTOMER_ROLE_IN_DATABASE ="CLIENT";
 	
 	@Autowired
-	ICustomerDOA icd;
+	ICustomerDAO icd;
 	@Autowired
 	IRoleDAO ird;
 	@Autowired

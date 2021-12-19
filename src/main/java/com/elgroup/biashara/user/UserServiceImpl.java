@@ -7,6 +7,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.elgroup.biashara.exception.UserAlreadyExistException;
+import com.elgroup.biashara.exception.UserNotFoundException;
 import com.elgroup.biashara.security.IRoleDAO;
 import com.elgroup.biashara.security.Role;
 
@@ -14,9 +15,7 @@ import com.elgroup.biashara.security.Role;
 public class UserServiceImpl implements IUserService {
 
 	@Autowired
-	IUserDAO isd;
-	@Autowired
-	IRoleDAO ird;
+	IUserDAO iud;
 	
 	@Autowired
     private PasswordEncoder passwordEncoder;
@@ -24,31 +23,31 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public void create(User user) {
 		// TODO Auto-generated method stub
-		isd.save(user);
+		iud.save(user);
 	}
 
 	@Override
 	public void update(User user) {
 		// TODO Auto-generated method stub
-		isd.saveAndFlush(user);
+		iud.saveAndFlush(user);
 	}
 
 	@Override
 	public User getUser(Long id) {
 		// TODO Auto-generated method stub
-		return isd.getById(id);
+		return iud.getById(id);
 	}
 
 	@Override
 	public void delete(User user) {
 		// TODO Auto-generated method stub
-		isd.delete(user);
+		iud.delete(user);
 	}
 
 	@Override
 	public List<User> getAll() {
 		// TODO Auto-generated method stub
-		return isd.findAll();
+		return iud.findAll();
 	}
 
 	@Override
@@ -58,23 +57,38 @@ public class UserServiceImpl implements IUserService {
             throw new UserAlreadyExistException("There is an account with that email address: " + user.getEmail());
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return isd.save(user);
+        return iud.save(user);
 	}
 	
 	@Override
 	public User findByEmail(String email) {
 		// TODO Auto-generated method stub
-		return isd.findByEmail(email);
+		return iud.findByEmail(email);
 	}
 	
 	private boolean emailExists(final String email) {
-        return isd.findByEmail(email) != null;
+        return findByEmail(email) != null;
     }
-
-	@Override
-	public Role getRoleByName(String name) {
-		// TODO Auto-generated method stub
-		return ird.findByName(name);
-	}
+	
+	public void updateResetPasswordToken(String token, String email) throws UserNotFoundException {
+        User user = iud.findByEmail(email);
+        if (user != null) {
+            user.setResetPasswordToken(token);
+            iud.saveAndFlush(user);
+        } else {
+            throw new UserNotFoundException("Could not find any user with the email " + email);
+        }
+    }
+	
+	public User getByResetPasswordToken(String token) {
+        return iud.findByResetPasswordToken(token);
+    }
+	
+	public void updatePassword(User user, String newPassword) {
+        String encodedPassword = passwordEncoder.encode(newPassword);
+        user.setPassword(encodedPassword);
+        user.setResetPasswordToken(null);
+        iud.saveAndFlush(user);
+    }
 
 }
