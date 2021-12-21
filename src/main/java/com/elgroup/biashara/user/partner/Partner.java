@@ -5,9 +5,13 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 
+import com.elgroup.biashara.industry.Industry;
 import com.elgroup.biashara.product.Product;
 import com.elgroup.biashara.user.User;
 
@@ -29,6 +33,12 @@ public class Partner extends User{
 	
 	@OneToMany(targetEntity = Product.class, mappedBy = "partner")
 	private List<Product> products = new ArrayList<>();
+	
+	@OneToOne
+	@JoinTable( name = "T_Industry_Partner_Associations",
+    joinColumns = @JoinColumn(name = "idPartner"),
+    inverseJoinColumns = @JoinColumn(name = "idIndustry") )
+	private Industry industry;
 	
 	public long getPhone() {
 		return phone;
@@ -72,13 +82,19 @@ public class Partner extends User{
 		this.products = products;
 	}
 	
+	public Industry getIndustry() {
+		return industry;
+	}
+	public void setIndustry(Industry industry) {
+		this.industry = industry;
+	}
+	
 	@Override
 	public String toString() {
 		return "Partner [phone=" + phone + ", idCard=" + idCard + ", businessName=" + businessName + ", businessLogo="
-				+ businessLogo + ", businessSlogan=" + businessSlogan + ", products=" + products + ", firstname="
-				+ firstname + ", lastname=" + lastname + ", email=" + email + ", password=" + password + ", enabled="
-				+ enabled + "]";
+				+ businessLogo + ", businessSlogan=" + businessSlogan + ", Number of products=" + products.size() + ", industry="
+				+ industry.getName() + ", firstname=" + firstname + ", lastname=" + lastname + ", password=" + password
+				+ ", email=" + email + ", resetPasswordToken=" + resetPasswordToken + ", enabled=" + enabled + "]";
 	}
-	
 	
 }

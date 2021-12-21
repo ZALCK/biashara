@@ -12,10 +12,9 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import org.springframework.data.annotation.CreatedDate;
 
 import com.elgroup.biashara.security.Role;
 
@@ -37,15 +36,20 @@ public class User {
 	
 	protected boolean enabled;
 
-	@CreatedDate
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date creationDate;
-
 	@OneToOne()
 	@JoinTable( name = "T_User_Role_Association",
 				joinColumns = @JoinColumn( name = "idUser" ),
 				inverseJoinColumns = @JoinColumn( name = "idRole" ))
 	private Role role;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable = false)
+    private Date creationDate;
+	
+	@PrePersist
+    public void onCreate() {
+		creationDate = new Date();
+    }
 
 	public long getId() {
 		return id;

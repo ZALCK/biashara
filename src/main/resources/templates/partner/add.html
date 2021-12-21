@@ -51,6 +51,12 @@
 		<label for="businessLogo">Logo de votre entreprise :
 			<input type="text" th:field="*{businessLogo}" placeholder="Logo de votre entreprise">
 		</label>
+    	
+    	<label for="businessIndustry">Industry de votre entreprise :</label>
+    	<select th:field="*{industry}">
+		    <option th:each="industry : ${industries}" th:value="${industry.id}" th:text="${industry.name}">
+		    </option>
+		</select>
 		
 		<input type="submit" value="Add partner">
 	</form>

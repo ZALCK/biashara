@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.elgroup.biashara.user.partner.Partner;
+import com.elgroup.biashara.industry.IIndustryService;
 import com.elgroup.biashara.user.partner.IPartnerService;
 
 @Controller
@@ -19,26 +20,31 @@ public class PartnerController {
 
 	@Autowired
 	private IPartnerService ips;
-	
+
+	@Autowired
+	private IIndustryService iis;
+
 	@RequestMapping(value = "/add", method =RequestMethod.GET)
 	public String toAdd(Model model) {
 		Partner partner = new Partner();
 		model.addAttribute("partner", partner);
+		model.addAttribute("industries", iis.getAll());
 		
 		return "/partner/add";
 	}
-	
+
 	@RequestMapping(value = "/add", method=RequestMethod.POST)
 	public String add(@ModelAttribute(value="partner") Partner partner) {
 		ips.create(partner);
 		
 		return "redirect:/partner/list";
 	}
-	
+
 	@RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
 	public String toUpdate(@PathVariable("id") Long id, Model model) {
 		Partner partner = ips.getPartner(id);
 		model.addAttribute("partner", partner);
+		model.addAttribute("industries", iis.getAll());
 		
 		return "/partner/update";
 	}
@@ -54,6 +60,7 @@ public class PartnerController {
 		mergePartnerInfos.setBusinessLogo(partner.getBusinessLogo());
 		mergePartnerInfos.setBusinessName(partner.getBusinessName());
 		mergePartnerInfos.setBusinessSlogan(partner.getBusinessSlogan());
+		mergePartnerInfos.setIndustry(partner.getIndustry());
 		ips.update(mergePartnerInfos);
 		
 		return "redirect:/partner/list";
@@ -76,16 +83,16 @@ public class PartnerController {
 		
 		return "redirect:/partner/list";
 	}
-	
+
 	@RequestMapping(value = "/status/{id}", method = RequestMethod.GET)
 	public String enabledOrDisable(@PathVariable("id") long id, Model model){
 		Partner partner = ips.getPartner(id);
 		partner.setEnabled(!partner.isEnabled());
 		ips.update(partner);
-		
+
 		return "redirect:/partner/list";
 	}
-	
+
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String getList(Model model) {
 		List<Partner> liste = ips.getAll();

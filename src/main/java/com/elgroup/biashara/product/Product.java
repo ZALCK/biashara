@@ -1,8 +1,10 @@
 package com.elgroup.biashara.product;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,6 +13,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.elgroup.biashara.command.CommandLine;
 import com.elgroup.biashara.comment.Comment;
@@ -25,7 +30,11 @@ public class Product {
 	private String description;
 	private int price;
 	private boolean inStock;
-	private String image_link;
+	private String imageLink;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable = false)
+    private Date creationDate;
 	
 	@ManyToOne
     @JoinTable(name = "T_Products_Partner_Association",
@@ -39,6 +48,11 @@ public class Product {
 	@OneToMany(targetEntity = Comment.class, mappedBy = "product")
 	private List<Comment> comments = new ArrayList<>();
 
+	@PrePersist
+    public void onCreate() {
+		creationDate = new Date();
+    }
+	
 	public long getId() {
 		return id;
 	}
@@ -79,12 +93,12 @@ public class Product {
 		this.inStock = inStock;
 	}
 
-	public String getImage_link() {
-		return image_link;
+	public String getImageLink() {
+		return imageLink;
 	}
 
-	public void setImage_link(String image_link) {
-		this.image_link = image_link;
+	public void setImageLink(String imageLink) {
+		this.imageLink = imageLink;
 	}
 
 	public Partner getPartner() {
@@ -111,11 +125,19 @@ public class Product {
 		this.comments = comments;
 	}
 
+	public Date getCreationDate() {
+		return creationDate;
+	}
+
+	public void setCreationDate(Date creationDate) {
+		this.creationDate = creationDate;
+	}
+
 	@Override
 	public String toString() {
 		return "Product [id=" + id + ", name=" + name + ", description=" + description + ", price=" + price
-				+ ", inStock=" + inStock + ", image_link=" + image_link + ", partner=" + partner + ", commandLines="
-				+ commandLines + ", comments=" + comments + "]";
+				+ ", inStock=" + inStock + ", imageLink=" + imageLink + ", creationDate=" + creationDate + ", partner="
+				+ partner + ", commandLines=" + commandLines + ", comments=" + comments + "]";
 	}
 	
 }

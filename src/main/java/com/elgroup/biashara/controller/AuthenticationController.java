@@ -10,14 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.elgroup.biashara.exception.UserNotFoundException;
 import com.elgroup.biashara.user.IUserService;
@@ -33,34 +30,11 @@ public class AuthenticationController {
 	
 	@Autowired
 	IUserService ius;
-	
-	private String CLIENT_ROLE = "CLIENT";
-	private String PARTNER_ROLE = "PARTENAIRE";
-	private String MODERATOR_ROLE = "MODERATEUR";
-
 	 
 	@GetMapping(value = "/login")
 	 public String loginForm() {
 		 return "/authentication/signin";
 	 }
-
-	@GetMapping(value = "/")
-	@ResponseBody
-	public String getHomePage() {
-		if (getCurrentUserConnected() != null) {
-			User userConnected = getCurrentUserConnected();
-			/*if (userConnected.getRole().getPrivileges().contains(ius.getRoleByName(CLIENT_ROLE))) {
-				return "redirect:/customer/list";
-			} else if (userConnected.getRole().getPrivileges().contains(ius.getRoleByName(PARTNER_ROLE))) {
-				return "redirect:/partner/list";
-			} else if (userConnected.getRole().getPrivileges().contains(ius.getRoleByName(MODERATOR_ROLE))) {
-				return "redirect:/moderator/list";
-			} else {*/
-				return "Fully authenticated : " + userConnected.toString();
-			//}
-		}
-		return "redirect:/login";
-	}
 	
 	@GetMapping("/forgot_password")
     public String showForgotPasswordForm() {
@@ -107,9 +81,7 @@ public class AuthenticationController {
                 + "or you have not made the request.</p>";
          
         helper.setSubject(subject);
-         
         helper.setText(content, true);
-         
         mailSender.send(message);
     }
 
@@ -140,7 +112,7 @@ public class AuthenticationController {
         } else {           
             ius.updatePassword(user, password);
              
-            model.addAttribute("message", "You have successfully changed your password.");
+            model.addAttribute("message", "You have successfully changed your password. Please login");
         }
          
         return "/authentication/signin";
@@ -151,14 +123,4 @@ public class AuthenticationController {
         return siteURL.replace(request.getServletPath(), "");
     }
     
-	private User getCurrentUserConnected() {
-		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		User userConnected;
-		if (principal instanceof UserDetails) {
-			UserDetails userDetails = (UserDetails) principal;
-			userConnected = ius.findByEmail(userDetails.getUsername());
-			return userConnected;
-		}
-		return null;
-	}
 }

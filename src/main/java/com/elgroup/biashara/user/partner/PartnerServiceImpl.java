@@ -58,6 +58,12 @@ public class PartnerServiceImpl implements IPartnerService {
 	}
 
 	@Override
+	public Partner findByBusinessName(String businessName) {
+		// TODO Auto-generated method stub
+		return ipd.findByBusinessName(businessName);
+	}
+	
+	@Override
 	public Partner registerNewPartnerAccount(Partner partner) throws UserAlreadyExistException {
 		// TODO Auto-generated method stub
 		if (emailExists(partner.getEmail())) {

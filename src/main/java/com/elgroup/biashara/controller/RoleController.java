@@ -64,8 +64,7 @@ public class RoleController {
 	
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String getList(Model model) {
-		List<Role> liste;
-		liste = irs.getAll();
+		List<Role> liste = irs.getAll();
 		model.addAttribute("roles", liste);
 		return "/role/list";
 	}

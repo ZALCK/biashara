@@ -1,0 +1,26 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>Add a Industry</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+
+	<form action="#" th:action="@{/industry/update}" th:object="${industry}"
+		method="post">
+		
+		<input type="hidden" th:field="*{id}">
+		
+		<label for="name">Nom :
+			<input type="text" th:field="*{name}" placeholder="Industry name" required="required">
+		</label>
+		
+		<input type="submit" value="Update industry">
+	</form>
+
+</body>
+
+</html>

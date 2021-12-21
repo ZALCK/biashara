@@ -11,6 +11,7 @@ public interface IPartnerService {
 	public void delete (Partner partner);
 	public List<Partner> getAll();
 	
+	public Partner findByBusinessName(String businessName);
 	public Partner registerNewPartnerAccount(Partner customer) throws UserAlreadyExistException;
 	public Partner findByEmail(String email);
 }

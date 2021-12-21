@@ -2,6 +2,7 @@ package com.elgroup.biashara.comment;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,10 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import org.springframework.data.annotation.CreatedDate;
 
 import com.elgroup.biashara.product.Product;
 import com.elgroup.biashara.user.customer.Customer;
@@ -22,10 +22,6 @@ public class Comment {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
-	
-	@CreatedDate
-    @Temporal(TemporalType.TIMESTAMP)
-	private Date commentDate;
 	
 	@ManyToOne
 	@JoinTable(name = "T_Comments_Customer_Association",
@@ -42,58 +38,67 @@ public class Comment {
 	private String text;
 	private boolean isVisible;
 	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable = false)
+    private Date creationDate;
+    
+    @PrePersist
+    public void onCreate() {
+		creationDate = new Date();
+    }
+
 	public int getId() {
 		return id;
 	}
-	
+
 	public void setId(int id) {
 		this.id = id;
 	}
-	
-	public Date getCommentDate() {
-		return commentDate;
-	}
-	
-	public void setCommentDate(Date commentDate) {
-		this.commentDate = commentDate;
-	}
-	
+
 	public Customer getCustomer() {
 		return customer;
 	}
-	
+
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
-	
+
 	public Product getProduct() {
 		return product;
 	}
-	
+
 	public void setProduct(Product product) {
 		this.product = product;
 	}
-	
+
 	public String getText() {
 		return text;
 	}
-	
+
 	public void setText(String text) {
 		this.text = text;
 	}
-	
+
 	public boolean isVisible() {
 		return isVisible;
 	}
-	
+
 	public void setVisible(boolean isVisible) {
 		this.isVisible = isVisible;
 	}
-	
+
+	public Date getCreationDate() {
+		return creationDate;
+	}
+
+	public void setCreationDate(Date creationDate) {
+		this.creationDate = creationDate;
+	}
+
 	@Override
 	public String toString() {
-		return "Comment [id=" + id + ", commentDate=" + commentDate + ", customer=" + customer + ", product=" + product
-				+ ", text=" + text + ", isVisible=" + isVisible + "]";
+		return "Comment [id=" + id + ", customer=" + customer + ", product=" + product + ", text=" + text
+				+ ", isVisible=" + isVisible + ", creationDate=" + creationDate + "]";
 	}
 	
 }

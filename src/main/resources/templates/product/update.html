@@ -1,0 +1,43 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>Update a Product</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+
+	<form action="#" th:action="@{/product/update}" th:object="${product}"
+		method="post">
+		
+		<input type="hidden" th:field="*{id}">
+		
+		<label for="name">Nom :
+			<input th:field="*{name}" placeholder="Product name" required="required"/>
+		</label>
+		
+		<label for="name">Prix :
+			<input th:field="*{price}" placeholder="Product price" required="required"/>
+		</label>
+		
+		<label>En stock :
+	        <input type="checkbox" th:field="*{inStock}"/>
+    	</label>
+		
+		<label for="description">Description :
+			<textarea th:field="*{description}" placeholder="Product description" required="required"></textarea >
+		</label>
+		
+		<label for="name">Lien de l'image :
+			<input th:field="*{imageLink}" placeholder="Product image link" required="required"/>
+		</label>
+		
+		<input type="submit" value="Update Product">
+		
+	</form>
+
+</body>
+
+</html>

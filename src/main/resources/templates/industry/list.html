@@ -1,0 +1,37 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>List industries</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+	<div th:switch="${industries.isEmpty()}">
+		<h2 th:case="true">No industries found!</h2>
+		<div th:case="*">
+			<h2>Industries</h2>
+			<table>
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Edit</th>
+						<th>Delete</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="industry : ${industries}">
+						<td th:text="${industry.name}"></td>
+						<td><a th:href="@{/industry/update/{id}(id=${industry.id})}">Edit</a></td>
+						<td><a th:href="@{/industry/delete/{id}(id=${industry.id})}">Delete</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<p>
+			<a th:href="@{/industry/add}">Add a new industry</a>
+		</p>
+	</div>
+</body>
+</html>
