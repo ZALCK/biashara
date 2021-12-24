@@ -13,7 +13,7 @@ import com.elgroup.biashara.security.Role;
 @Service
 public class PartnerServiceImpl implements IPartnerService {
 	
-	private String PARTNER_ROLE_IN_DATABASE ="PARTENAIRE";
+	public static String PARTNER_ROLE_IN_DATABASE ="PARTENAIRE";
 	
 	@Autowired
 	IPartnerDAO ipd;

@@ -78,4 +78,10 @@ public class ProductController {
 		return "/product/list";
 	}
 	
+	@RequestMapping(method = RequestMethod.GET)
+	public String getCatalogue(Model model) {
+		model.addAttribute("products", ips.getAll());
+		return "/product/catalogue";
+	}
+	
 }

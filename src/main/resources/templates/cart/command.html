@@ -1,0 +1,39 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>Cart</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+<h2>Le code de votre commande est : </h2>
+<p th:text="${command.id}"></p >
+	
+			<h2>Products</h2>
+			<table>
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Price</th>
+						<th>Quantity</th>
+						<th>Image_link</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="commandLine : ${command.commandLines}">
+						<td th:text="${commandLine.product.name}"></td>
+						<td th:text="${commandLine.product.price}"></td>
+						<td th:text="${commandLine.quantity}"></td>
+						<td th:text="${commandLine.product.imageLink}"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<p>
+			<a th:href="@{/product}">Continue Shopping</a>
+		</p>
+	</div>
+</body>
+</html>

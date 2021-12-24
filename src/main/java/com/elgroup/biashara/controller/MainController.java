@@ -2,6 +2,8 @@ package com.elgroup.biashara.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -33,7 +35,7 @@ public class MainController {
 	
 	@GetMapping(value = "/")
 	@ResponseBody
-	public String getHomePage() {
+	public String getHomePage(HttpSession session) {
 		if (getCurrentUserConnected() != null) {
 			User userConnected = getCurrentUserConnected();
 			/*if (userConnected.getRole().getPrivileges().contains(ius.getRoleByName(CLIENT_ROLE))) {
@@ -43,20 +45,23 @@ public class MainController {
 			} else if (userConnected.getRole().getPrivileges().contains(ius.getRoleByName(MODERATOR_ROLE))) {
 				return "redirect:/moderator/list";
 			} else {*/
-				return "Fully authenticated : " + userConnected.toString();
+				return "Fully authenticated : " + userConnected.toString()
+				+ "\n Session ID with httpSession : "+session.getId();
 			//}
 		}
-		return "redirect:/login";
+		return "redirect:/login"
+				+ "\n Session ID with httpSession : "+session.getId();
 	}
 	
-	@RequestMapping(value = "/{businessName}", method = RequestMethod.GET)
-	public String getProductsByBussinessName(@PathVariable("businessName") String businessName, Model model) {
-		Partner partner = ips.findByBusinessName(businessName);
-		List<Product> liste = partner.getProducts();
-		model.addAttribute("products", liste);
-		
-		return "/product/list";
-	}
+	/*
+	 * @RequestMapping(value = "/{businessName}", method = RequestMethod.GET) public
+	 * String getProductsByBussinessName(@PathVariable("businessName") String
+	 * businessName, Model model) { Partner partner =
+	 * ips.findByBusinessName(businessName); List<Product> liste =
+	 * partner.getProducts(); model.addAttribute("products", liste);
+	 * 
+	 * return "/product/list"; }
+	 */
 	
 	public User getCurrentUserConnected() {
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();

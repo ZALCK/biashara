@@ -13,7 +13,7 @@ import com.elgroup.biashara.security.Role;
 @Service
 public class CustomerServiceImpl implements ICustomerService {
 	
-	private String CUSTOMER_ROLE_IN_DATABASE ="CLIENT";
+	public static String CUSTOMER_ROLE_IN_DATABASE ="CLIENT";
 	
 	@Autowired
 	ICustomerDAO icd;

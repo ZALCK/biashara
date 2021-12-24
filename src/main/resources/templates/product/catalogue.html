@@ -1,0 +1,43 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>List products</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+	<div th:switch="${products.isEmpty()}">
+		<h2 th:case="true">No products found!</h2>
+		<div th:case="*">
+			<h2>Products</h2>
+			<table>
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Price</th>
+						<th>Description</th>
+						<th>Image_link</th>
+						<th>En stock</th>
+						<th>Buy</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="product : ${products}">
+						<td th:text="${product.name}"></td>
+						<td th:text="${product.price}"></td>
+						<td th:text="${product.description}"></td>
+						<td th:text="${product.imageLink}"></td>
+						<td th:text="${product.inStock}"></td>
+						<td><a th:href="@{/cart/buy/{id}(id=${product.id})}">Buy</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<p>
+			<a th:href="@{/cart}">View Cart</a>
+		</p>
+	</div>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>Cart</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+
+<!--<div th:if="${session.cart}">Nous avons un panier
+	<div th:each="commandLine : ${session.cart}">
+		<p th:text="${commandLine.product.name}"></p >
+	</div>
+</div>-->
+	<div th:unless="${session.cart}">Pas de panier</div>
+	
+	<div th:if="${session.cart}">
+		<div th:switch="${session.cart.isEmpty()}">
+			<h2 th:case="true">Pas de produit dans le panier!</h2>
+			
+			<div th:if="${error != null}">
+		    	<p >[[${error}]]</p>
+			</div>
+			
+			<div th:case="*">
+				<h2>Products</h2>
+				<table>
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Price</th>
+							<th>Quantity</th>
+							<th>Image_link</th>
+							<th>Ajouter</th>
+							<th>Retirer</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="commandLine : ${session.cart}">
+							<td th:text="${commandLine.product.name}"></td>
+							<td th:text="${commandLine.product.price}"></td>
+							<td th:text="${commandLine.quantity}"></td>
+							<td th:text="${commandLine.product.imageLink}"></td>
+							<td><a th:href="@{/cart/buy/{id}(id=${commandLine.product.id})}">Buy</a></td>
+							<td><a th:href="@{/cart/remove/{id}(id=${commandLine.product.id})}">Remove</a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<p>
+				<a th:href="@{/cart/purchase}">Confirm Purchase</a>
+			</p>
+		</div>
+	</div>
+	<a th:href="@{/product}">Continue Shopping</a>
+</body>
+</html>

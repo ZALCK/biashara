@@ -13,20 +13,25 @@ import com.elgroup.biashara.product.Product;
 public class CommandLine {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 
     @ManyToOne
-    @JoinColumn(name="idCommand", nullable=false)
+    @JoinColumn(name="idCommand")
     private Command command;
 
     @ManyToOne()
-    @JoinColumn(name="idProduct", nullable=false)
+    @JoinColumn(name="idProduct")
     private Product product;
 
     private int quantity;
     
-    private String statut;
+    private String state;
+
+	public CommandLine() {
+		super();
+		this.state = CommandState.PENDING.toString();
+	}
 
 	public int getId() {
 		return id;
@@ -60,12 +65,18 @@ public class CommandLine {
 		this.quantity = quantity;
 	}
 
-	public String getStatut() {
-		return statut;
+	public String getState() {
+		return state;
 	}
 
-	public void setStatut(String statut) {
-		this.statut = statut;
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	@Override
+	public String toString() {
+		return "CommandLine [id=" + id + ", command=" + command + ", product=" + product + ", quantity=" + quantity
+				+ ", state=" + state + "]";
 	}
 
 }

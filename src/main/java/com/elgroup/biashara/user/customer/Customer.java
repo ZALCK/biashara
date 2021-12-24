@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 
+import com.elgroup.biashara.command.Command;
 import com.elgroup.biashara.comment.Comment;
 import com.elgroup.biashara.report.Report;
 import com.elgroup.biashara.user.User;
@@ -26,6 +27,9 @@ public class Customer extends User{
 	
 	@OneToMany(targetEntity = Report.class, mappedBy = "customer")
 	private List<Report> reports = new ArrayList<>();
+	
+	@OneToMany(targetEntity = Command.class, mappedBy = "customer")
+	private List<Command> commands = new ArrayList<>();
 
 	public long getPhone() {
 		return phone;
@@ -59,10 +63,18 @@ public class Customer extends User{
 		this.reports = reports;
 	}
 
+	public List<Command> getCommands() {
+		return commands;
+	}
+
+	public void setCommands(List<Command> commands) {
+		this.commands = commands;
+	}
+
 	@Override
 	public String toString() {
 		return "Customer [phone=" + phone + ", city=" + city + ", comments=" + comments + ", reports=" + reports
-				+ ", firstname=" + firstname + ", lastname=" + lastname + ", email=" + email + ", password=" + password
+				+ ", commands=" + commands + ", firstname=" + firstname + ", lastname=" + lastname + ", email=" + email
 				+ ", enabled=" + enabled + "]";
 	}
 

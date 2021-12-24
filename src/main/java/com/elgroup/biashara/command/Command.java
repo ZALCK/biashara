@@ -26,21 +26,28 @@ public class Command {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	
-	@ManyToOne @JoinColumn(name="idCustomer", nullable=false)
+	@ManyToOne
+	@JoinColumn(name="idCustomer", nullable=false)
     private Customer customer;
 	
-	@OneToMany(targetEntity=CommandLine.class, mappedBy="command", cascade=CascadeType.ALL)
+	@OneToMany(targetEntity=CommandLine.class, mappedBy="command")
     private Set<CommandLine> commandLines = new HashSet<CommandLine>();
-
+	
+	private String state;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable = false)
     private Date creationDate;
-    
+
     @PrePersist
     public void onCreate() {
 		creationDate = new Date();
-    }
+    } 
+
+	public Command() {
+		super();
+		this.state = CommandState.PENDING.toString();
+	}
 
 	public long getId() {
 		return id;
@@ -74,6 +81,14 @@ public class Command {
 		this.creationDate = creationDate;
 	}
 
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
 	public String toString() {
         double totalPrice = 0;
         StringBuilder builder = new StringBuilder();
@@ -85,6 +100,6 @@ public class Command {
         }
         builder.append( "    Prix total de la commande : " ).append( totalPrice ).append( " FCFA" );
         return builder.toString();
-    }	
-	
+    }
+
 }
